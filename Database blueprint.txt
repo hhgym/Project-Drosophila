@@ -1,0 +1,29 @@
+Project:
+	# id: byte
+	- name: String
+	- minParticipants: short
+	- maxParticipants: short
+
+ProjectAllowedLevels:
+	# Project.id
+	# Class.id
+
+ProjectManager:
+	# Student.id
+	# Project.id
+
+Class:
+	# id: byte
+	- level: byte
+	- classNumber: byte
+
+Student:
+	# id: short
+	- firstName: String
+	- lastName: String
+	- Class.id
+
+StudentWish:
+	# wishNr: byte
+	# Student.id
+	- Project.id
