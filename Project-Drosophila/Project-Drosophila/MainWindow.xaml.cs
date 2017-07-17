@@ -24,6 +24,28 @@ namespace Project_Drosophila
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = this;
+
+            List<byte> classLevels = new List<byte>();
+            for (byte i = Defaults.CLASS_LEVEL_MIN; i <= Defaults.CLASS_LEVEL_MAX; i++)
+                classLevels.Add(i);
+            studentClassLevel.ItemsSource = classLevels;
+
+            List<byte> classNumbers = new List<byte>();
+            for (byte i = Defaults.CLASS_NUMBER_MIN; i <= Defaults.CLASS_NUMBER_MAX; i++)
+                classNumbers.Add(i);
+            studentClassNumber.ItemsSource = classNumbers;
+
+            Data = new Data();
+        }
+
+        private void studentsImportStudents_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void studentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SelectedStudent = Data.Students[studentsList.SelectedIndex];
         }
     }
 }

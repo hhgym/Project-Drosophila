@@ -6,6 +6,69 @@
         xmlns:local="clr-namespace:Project_Drosophila"
         mc:Ignorable="d"
         Title="Project Drosophila" Height="350" Width="525">
+    <Window.Resources>
+        <local:NullToBoolConverter x:Key="NullToBoolConverter" />
+    </Window.Resources>
     <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_Datei">
+                <MenuItem Name="menuOpenProject" Header="Projekt _öffnen" />
+            </MenuItem>
+        </Menu>
+
+        <TabControl>
+            <TabItem Header="Schüler">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Name="studentsImportStudents" Content="Schüler importieren..." Click="studentsImportStudents_Click" />
+                        <Button Name="studentsImportWishes" Content="Wünsche importieren..." />
+                        <Button Name="studentsAddStudent" Content="Schüler hinzufügen" />
+                    </StackPanel>
+                    <Grid DockPanel.Dock="Right" IsEnabled="{Binding SelectedStudent, Converter={StaticResource NullToBoolConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Content="Vorname:" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="Nachname:" />
+                        <Label Grid.Column="0" Grid.Row="2" Content="Email:" />
+                        <Label Grid.Column="0" Grid.Row="3" Content="Klassenstufe:" />
+                        <Label Grid.Column="0" Grid.Row="4" Content="Klassennummer:" />
+                        
+                        <TextBox Text="{Binding SelectedStudent.FirstName, Mode=TwoWay}"
+                                 Name="studentFirstName" Grid.Column="1" Grid.Row="0" />
+                        <TextBox Text="{Binding SelectedStudent.LastName, Mode=TwoWay}"
+                                 Name="studentLastName" Grid.Column="1" Grid.Row="1" />
+                        <TextBox Text="{Binding SelectedStudent.Email, Mode=TwoWay}"
+                                 Name="studentEmail" Grid.Column="1" Grid.Row="2" />
+                        <ComboBox SelectedValue="{Binding SelectedStudent.ClassLevel, Mode=TwoWay}"
+                                  Name="studentClassLevel" Grid.Column="1" Grid.Row="3" />
+                        <ComboBox SelectedValue="{Binding SelectedStudent.ClassNumber, Mode=TwoWay}"
+                                  Name="studentClassNumber" Grid.Column="1" Grid.Row="4" />
+
+                        <Button Name="studentDelete" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="6" Content="Schüler löschen" />
+                    </Grid>
+                    <ListView Name="studentsList" ItemsSource="{Binding Data.Students}" SelectionChanged="studentsList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Vorname" DisplayMemberBinding="{Binding FirstName}" />
+                                <GridViewColumn Header="Nachname" DisplayMemberBinding="{Binding LastName}" />
+                                <GridViewColumn Header="Klasse" DisplayMemberBinding="{Binding Class}" />
+                                <GridViewColumn Header="E-Mail" DisplayMemberBinding="{Binding Email}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
     </DockPanel>
 </Window>
