@@ -12,10 +12,12 @@ namespace Project_Drosophila
 {
     public class Data
     {
+        public ObservableCollection<Project> Projects { get; private set; }
         public ObservableCollection<Student> Students { get; private set; }
 
         public Data()
         {
+            Projects = new ObservableCollection<Project>();
             Students = new ObservableCollection<Student>();
         }
 
@@ -97,9 +99,41 @@ namespace Project_Drosophila
                     Students.Add(student);
                 }
             }
+            catch (IOException e)
+            {
+                MessageBox.Show("Fehler beim Öffnen der Datei mit den Schülerdaten:\n" + e.Message);
+            }
             catch (Exception e)
             {
-                MessageBox.Show("Fehler beim Einlesen der Schülerdaten:\n" + e.Message);
+                MessageBox.Show("Unbekannter Fehler beim Einlesen der Schülerdaten:\n" + e.Message);
+            }
+        }
+        public void ExportStudentsForOnlineTool()
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Title = "Schüler für Onlinetool exportieren...";
+            dialog.Filter = "CSV für Onlinetool (*.csv)|*.csv";
+            if (dialog.ShowDialog() != true)
+                return;
+
+            try
+            {
+                ushort studentCount = (ushort) Students.Count;
+                string[] lines = new string[studentCount];
+                for (ushort i = 0; i < lines.Length; i++)
+                {
+                    Student student = Students[i];
+                    lines[i] = $"{student.Id};{student.FirstName};{student.LastName};{student.Email};{student.ClassLevel};{student.ClassNumber}";
+                }
+                File.WriteAllLines(dialog.FileName, lines, Encoding.Unicode);
+            }
+            catch (IOException e)
+            {
+                MessageBox.Show("Fehler beim Speichern der Schülerdaten:\n" + e.Message);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Unbekannter Fehler beim Exportieren der Schülerdaten:\n" + e.Message);
             }
         }
     }

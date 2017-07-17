@@ -60,6 +60,10 @@ namespace Project_Drosophila
         {
             Data.ImportStudents();
         }
+        private void studentsExportStudentsForOnlineTool_Click(object sender, RoutedEventArgs e)
+        {
+            Data.ExportStudentsForOnlineTool();
+        }
 
         private void studentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

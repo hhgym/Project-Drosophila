@@ -21,6 +21,7 @@
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                         <Button Name="studentsImportStudents" Content="Schüler importieren..." Click="studentsImportStudents_Click" />
+                        <Button Name="studentsExportStudentsForOnlineTool" Content="Schüler für Onlinetool exportieren..." Click="studentsExportStudentsForOnlineTool_Click" />
                         <Button Name="studentsImportWishes" Content="Wünsche importieren..." />
                         <Button Name="studentsAddStudent" Content="Schüler hinzufügen" />
                     </StackPanel>
