@@ -21,6 +21,23 @@ namespace Project_Drosophila
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        public Data Data { get; private set; }
+        private Student selectedStudent;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Student SelectedStudent
+        {
+            get { return selectedStudent; }
+            set
+            {
+                if (selectedStudent == value)
+                    return;
+                selectedStudent = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedStudent)));
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -41,6 +58,7 @@ namespace Project_Drosophila
 
         private void studentsImportStudents_Click(object sender, RoutedEventArgs e)
         {
+            Data.ImportStudents();
         }
 
         private void studentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -17,5 +17,30 @@ namespace Project_Drosophila
                 return max;
             return value;
         }
+
+        public static bool UserErrorWrapper(Func<string> function)
+        {
+            string result = function.Invoke();
+            if (result == null)
+                return true;
+            MessageBox.Show(result);
+            return false;
+        }
+        public static bool UserErrorWrapper(Func<string> function, int line)
+        {
+            string result = function.Invoke();
+            if (result == null)
+                return true;
+            MessageBox.Show($"Zeile {line + 1}: {result}");
+            return false;
+        }
+        public static bool UserErrorWrapper(Func<object, string> function, object data)
+        {
+            string result = function.Invoke(data);
+            if (result == null)
+                return true;
+            MessageBox.Show(result);
+            return false;
+        }
     }
 }
