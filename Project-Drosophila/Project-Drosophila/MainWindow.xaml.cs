@@ -72,5 +72,9 @@ namespace Project_Drosophila
             else
                 SelectedStudent = Data.Students[((KeyValuePair<ushort, Student>)studentsList.SelectedItem).Value.Id];
         }
+        private void studentDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Data.Students.Remove(SelectedStudent.Id);
+        }
     }
 }

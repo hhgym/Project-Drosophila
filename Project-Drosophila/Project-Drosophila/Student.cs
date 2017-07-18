@@ -45,6 +45,17 @@ namespace Project_Drosophila
             get { return email; }
             set
             {
+                if (!string.IsNullOrWhiteSpace(value))
+                    try
+                    {
+                        new System.Net.Mail.MailAddress(value);
+                    }
+                    catch
+                    {
+                        return;
+                    }
+                else
+                    value = null;
                 if (email == value)
                     return;
                 email = value;
@@ -93,5 +104,8 @@ namespace Project_Drosophila
             ClassLevel = Defaults.STUDENT_CLASS_LEVEL;
             ClassNumber = Defaults.STUDENT_CLASS_NUMBER;
         }
+
+        public override string ToString()
+            => $"{FirstName} {LastName}, {Class}";
     }
 }
