@@ -17,7 +17,7 @@ namespace Project_Drosophila
         public event PropertyChangedEventHandler PropertyChanged;
 
         private static byte nextId;
-        public short Id { get; private set; }
+        public ushort Id { get; private set; }
         public string FirstName
         {
             get { return firstName; }

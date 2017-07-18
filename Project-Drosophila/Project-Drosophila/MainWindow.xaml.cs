@@ -67,7 +67,10 @@ namespace Project_Drosophila
 
         private void studentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            SelectedStudent = Data.Students[studentsList.SelectedIndex];
+            if (studentsList.SelectedItem == null)
+                SelectedStudent = null;
+            else
+                SelectedStudent = Data.Students[((KeyValuePair<ushort, Student>)studentsList.SelectedItem).Value.Id];
         }
     }
 }

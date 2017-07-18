@@ -13,12 +13,12 @@ namespace Project_Drosophila
     public class Data
     {
         public ObservableCollection<Project> Projects { get; private set; }
-        public ObservableCollection<Student> Students { get; private set; }
+        public ObservableDictionary<ushort, Student> Students { get; private set; }
 
         public Data()
         {
             Projects = new ObservableCollection<Project>();
-            Students = new ObservableCollection<Student>();
+            Students = new ObservableDictionary<ushort, Student>();
         }
 
         public void ImportStudents()
@@ -29,6 +29,7 @@ namespace Project_Drosophila
             if (dialog.ShowDialog() != true)
                 return;
 
+            List<Student> students = new List<Student>();
             try
             {
                 string[] lines = File.ReadAllLines(dialog.FileName);
@@ -96,8 +97,10 @@ namespace Project_Drosophila
                         ClassLevel = classLevel,
                         ClassNumber = classNumber
                     };
-                    Students.Add(student);
+                    students.Add(student);
                 }
+                foreach (Student student in students)
+                    Students.Add(student.Id, student);
             }
             catch (IOException e)
             {
@@ -118,12 +121,14 @@ namespace Project_Drosophila
 
             try
             {
-                ushort studentCount = (ushort) Students.Count;
+                ushort studentCount = (ushort)Students.Count;
                 string[] lines = new string[studentCount];
-                for (ushort i = 0; i < lines.Length; i++)
+                int i = 0;
+                ICollection<Student> students = Students.Values;
+                foreach (Student student in Students.Values)
                 {
-                    Student student = Students[i];
                     lines[i] = $"{student.Id};{student.FirstName};{student.LastName};{student.Email};{student.ClassLevel};{student.ClassNumber}";
+                    ++i;
                 }
                 File.WriteAllLines(dialog.FileName, lines, Encoding.Unicode);
             }
