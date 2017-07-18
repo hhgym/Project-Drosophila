@@ -61,10 +61,11 @@
                     <ListView Name="studentsList" ItemsSource="{Binding Data.Students}" SelectionChanged="studentsList_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Vorname" DisplayMemberBinding="{Binding FirstName}" />
-                                <GridViewColumn Header="Nachname" DisplayMemberBinding="{Binding LastName}" />
-                                <GridViewColumn Header="Klasse" DisplayMemberBinding="{Binding Class}" />
-                                <GridViewColumn Header="E-Mail" DisplayMemberBinding="{Binding Email}" />
+                                <GridViewColumn Header="Vorname" DisplayMemberBinding="{Binding Value.FirstName}" />
+                                <GridViewColumn Header="Nachname" DisplayMemberBinding="{Binding Value.LastName}" />
+                                <GridViewColumn Header="Klasse" DisplayMemberBinding="{Binding Value.Class}" />
+                                <GridViewColumn Header="E-Mail" DisplayMemberBinding="{Binding Value.Email}" />
+                                <GridViewColumn Header="Wünsche" DisplayMemberBinding="{Binding Value.Wishes}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
