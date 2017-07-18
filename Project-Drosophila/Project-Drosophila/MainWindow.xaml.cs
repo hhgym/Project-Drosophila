@@ -53,7 +53,7 @@ namespace Project_Drosophila
                 classNumbers.Add(i);
             studentClassNumber.ItemsSource = classNumbers;
 
-            Data = new Data();
+            Data = Data.Instance;
         }
 
         private void studentsImportStudents_Click(object sender, RoutedEventArgs e)

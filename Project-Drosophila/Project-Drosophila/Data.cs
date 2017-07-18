@@ -12,10 +12,21 @@ namespace Project_Drosophila
 {
     public class Data
     {
+        private static Data instance;
+        public static Data Instance
+        {
+            get
+            {
+                if (instance == null)
+                    instance = new Data();
+                return instance;
+            }
+        }
+
         public ObservableCollection<Project> Projects { get; private set; }
         public ObservableDictionary<ushort, Student> Students { get; private set; }
 
-        public Data()
+        private Data()
         {
             Projects = new ObservableCollection<Project>();
             Students = new ObservableDictionary<ushort, Student>();
