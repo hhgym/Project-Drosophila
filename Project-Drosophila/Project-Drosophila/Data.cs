@@ -65,13 +65,13 @@ namespace Project_Drosophila
 
                     if (!Utils.UserErrorWrapper(() =>
                     {
-                        firstName = studentData[0];
-                        if (string.IsNullOrWhiteSpace(firstName))
-                            return "Bitte einen Vornamen eingeben";
-
-                        lastName = studentData[1];
+                        lastName = studentData[0];
                         if (string.IsNullOrWhiteSpace(lastName))
                             return "Bitte einen Nachnamen eingeben";
+
+                        firstName = studentData[1];
+                        if (string.IsNullOrWhiteSpace(firstName))
+                            return "Bitte einen Vornamen eingeben";
 
                         email = studentData[2];
                         if (!string.IsNullOrWhiteSpace(email))
