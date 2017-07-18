@@ -23,6 +23,7 @@ namespace Project_Drosophila
     {
         public Data Data { get; private set; }
         private Student selectedStudent;
+        private Project selectedProject;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -35,6 +36,17 @@ namespace Project_Drosophila
                     return;
                 selectedStudent = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedStudent)));
+            }
+        }
+        public Project SelectedProject
+        {
+            get { return selectedProject; }
+            set
+            {
+                if (selectedProject == value)
+                    return;
+                selectedProject = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SelectedProject)));
             }
         }
 
@@ -75,6 +87,22 @@ namespace Project_Drosophila
         private void studentDelete_Click(object sender, RoutedEventArgs e)
         {
             Data.Students.Remove(SelectedStudent.Id);
+        }
+
+        private void projectsImportProjects_Click(object sender, RoutedEventArgs e)
+        {
+            Data.ImportProjects();
+        }
+        private void projectsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (projectsList.SelectedItem == null)
+                SelectedProject = null;
+            else
+                SelectedProject = Data.Projects[((KeyValuePair<byte, Project>)projectsList.SelectedItem).Value.Id];
+        }
+        private void projectDelete_Click(object sender, RoutedEventArgs e)
+        {
+            Data.Projects.Remove(SelectedProject.Id);
         }
     }
 }

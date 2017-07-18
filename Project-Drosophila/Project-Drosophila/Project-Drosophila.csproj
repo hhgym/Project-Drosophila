@@ -74,6 +74,7 @@
     <Compile Include="Defaults.cs" />
     <Compile Include="NullToBoolConverter.cs" />
     <Compile Include="ObservableDictionary.cs" />
+    <Compile Include="Project.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Utils.cs" />
     <Page Include="MainWindow.xaml">

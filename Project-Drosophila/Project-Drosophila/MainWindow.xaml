@@ -71,6 +71,53 @@
                     </ListView>
                 </DockPanel>
             </TabItem>
+            <TabItem Header="Projekte">
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <Button Name="projectsImportProjects" Content="Projekte importieren..." Click="projectsImportProjects_Click" />
+                        <Button Name="projectsAddProject" Content="Projekt hinzufügen" />
+                    </StackPanel>
+                    <Grid DockPanel.Dock="Right" IsEnabled="{Binding SelectedProject, Converter={StaticResource NullToBoolConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="150" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" Content="Name:" />
+                        <Label Grid.Column="0" Grid.Row="1" Content="Beschreibung:" />
+                        <Label Grid.Column="0" Grid.Row="2" Content="Minimale Klassenstufe:" />
+                        <Label Grid.Column="0" Grid.Row="3" Content="Maximale Klassenstufe:" />
+                        <Label Grid.Column="0" Grid.Row="4" Content="Minimale Teilnehmerzahl:" />
+                        <Label Grid.Column="0" Grid.Row="5" Content="Maximale Teilnehmerzahl:" />
+
+                        <TextBox Text="{Binding SelectedProject.Name, Mode=TwoWay}"
+                                 Name="projectName" Grid.Column="1" Grid.Row="0" />
+                        <TextBox Text="{Binding SelectedProject.Description, Mode=TwoWay}"
+                                 Name="projectDescription" Grid.Column="1" Grid.Row="1"
+                                 AcceptsReturn="True" TextWrapping="Wrap" Height="100" />
+
+                        <Button Name="projectDelete" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Content="Projekt löschen" Click="projectDelete_Click" />
+                    </Grid>
+                    <ListView Name="projectsList" ItemsSource="{Binding Data.Projects}" SelectionChanged="projectsList_SelectionChanged">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Value.Name}" />
+                                <GridViewColumn Header="Klassenstufen" DisplayMemberBinding="{Binding Value.ClassLevels}" />
+                                <GridViewColumn Header="Teilnehmerzahl" DisplayMemberBinding="{Binding Value.ParticipantCounts}" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
         </TabControl>
     </DockPanel>
 </Window>
