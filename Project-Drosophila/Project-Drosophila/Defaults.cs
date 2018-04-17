@@ -23,5 +23,6 @@ namespace Project_Drosophila
 
         public const byte STUDENT_CLASS_LEVEL = 5;
         public const byte STUDENT_CLASS_NUMBER = 1;
+        public const byte STUDENT_WISHES_COUNT = 3;
     }
 }

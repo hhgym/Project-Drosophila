@@ -90,7 +90,22 @@ namespace Project_Drosophila
             }
         }
         public string Class => $"{ClassLevel}.{ClassNumber}";
-        
+
+        private Wishlist wishes;
+        public Wishlist Wishes
+        {
+            get { return wishes; }
+            set
+            {
+                if (wishes == value)
+                    return;
+                wishes = value;
+                wishes.CollectionChanged += (sender, e)
+                    => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Wishes)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Wishes)));
+            }
+        }
+
         static Student()
         {
             nextId = 0;
@@ -103,6 +118,7 @@ namespace Project_Drosophila
             Email = null;
             ClassLevel = Defaults.STUDENT_CLASS_LEVEL;
             ClassNumber = Defaults.STUDENT_CLASS_NUMBER;
+            //Wishes = new Wishlist();
         }
 
         public override string ToString()

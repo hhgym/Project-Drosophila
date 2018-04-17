@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Project_Drosophila
 {
@@ -13,7 +14,7 @@ namespace Project_Drosophila
     {
         private string name;
         private string description;
-        private ObservableCollection<ushort> managers;
+        private ObservableCollection<Student> managers;
         private byte participantsMin;
         private byte participantsMax;
         private byte classLevelMin;
@@ -53,7 +54,7 @@ namespace Project_Drosophila
             }
         }
 
-        public ObservableCollection<ushort> Managers
+        public ObservableCollection<Student> Managers
         {
             get { return managers; }
             set
@@ -65,11 +66,8 @@ namespace Project_Drosophila
             }
         }
         public string ManagersAsString
-            => string.Join(", ", (object[])Array.ConvertAll(Managers.ToArray(), (id) =>
-            {
-                Student student = Data.Instance.Students[id];
-                return $"{student.FirstName} {student.LastName}";
-            }));
+            => string.Join(", ", (object[])Array.ConvertAll(Managers.ToArray(), (student)
+                => $"{student.FirstName} {student.LastName}"));
 
         public byte ParticipantsMin
         {
@@ -129,6 +127,8 @@ namespace Project_Drosophila
         }
         public string ClassLevels => $"{ClassLevelMin} - {ClassLevelMax}";
 
+        public ICommand RemoveManager { get; private set; }
+
         static Project()
         {
             nextId = 0;
@@ -143,15 +143,27 @@ namespace Project_Drosophila
             ClassLevelMin = Defaults.PROJECT_CLASS_LEVEL_MIN_DEFAULT;
             ClassLevelMax = Defaults.PROJECT_CLASS_LEVEL_MAX_DEFAULT;
 
-            Managers = new ObservableCollection<ushort>();
+            Managers = new ObservableCollection<Student>();
             Managers.CollectionChanged += (sender, e) =>
             {
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Managers)));
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(ManagersAsString)));
             };
+            RemoveManager = new RemoveManagerCommand() { Project = this };
         }
 
         public override string ToString()
             => $"{Name}: P: {ParticipantsMin}-{ParticipantsMax}, C: {ClassLevelMin}-{ClassLevelMax}";
+
+        private class RemoveManagerCommand : ICommand
+        {
+            public Project Project { get; set; }
+            public event EventHandler CanExecuteChanged;
+
+            public bool CanExecute(object parameter)
+                => Project.Managers.Contains((Student)parameter);
+            public void Execute(object parameter)
+                => Project.Managers.Remove((Student)parameter);
+        }
     }
 }

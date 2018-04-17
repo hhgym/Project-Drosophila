@@ -66,6 +66,9 @@ namespace Project_Drosophila
             studentClassNumber.ItemsSource = classNumbers;
 
             Data = Data.Instance;
+            //Data.Students.Add(new Student() { FirstName = "Test" });
+            //Data.Projects.Add(new Project() { Name = "Test" });
+            //SelectedStudent = Data.Students[0];
         }
 
         private void studentsImportStudents_Click(object sender, RoutedEventArgs e)
@@ -75,6 +78,10 @@ namespace Project_Drosophila
         private void studentsExportStudentsForOnlineTool_Click(object sender, RoutedEventArgs e)
         {
             Data.ExportStudentsForOnlineTool();
+        }
+        private void studentsImportWishes_Click(object sender, RoutedEventArgs e)
+        {
+            //Data.ImportWishes();
         }
 
         private void studentsList_SelectionChanged(object sender, SelectionChangedEventArgs e)

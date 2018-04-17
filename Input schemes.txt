@@ -1,0 +1,5 @@
+Student:
+last name; first name; [email address]; class level; [class number]
+
+Project:
+name; [description]; [manager 1 last name, manager 1 first name [/manager 2 last name, manager 2 first name [/...]]; [participants min]; [participants max]; [class level min]; [class level max]

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project_Drosophila"
         mc:Ignorable="d"
-        Title="Project Drosophila" Height="350" Width="525">
+        Title="Project Drosophila" Height="500" Width="700">
     <Window.Resources>
         <local:NullToBoolConverter x:Key="NullToBoolConverter" />
     </Window.Resources>
@@ -22,7 +22,7 @@
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
                         <Button Name="studentsImportStudents" Content="Schüler importieren..." Click="studentsImportStudents_Click" />
                         <Button Name="studentsExportStudentsForOnlineTool" Content="Schüler für Onlinetool exportieren..." Click="studentsExportStudentsForOnlineTool_Click" />
-                        <Button Name="studentsImportWishes" Content="Wünsche importieren..." />
+                        <Button Name="studentsImportWishes" Content="Wünsche importieren..." Click="studentsImportWishes_Click" />
                         <Button Name="studentsAddStudent" Content="Schüler hinzufügen" />
                     </StackPanel>
                     <Grid DockPanel.Dock="Right" IsEnabled="{Binding SelectedStudent, Converter={StaticResource NullToBoolConverter}}">
@@ -44,7 +44,7 @@
                         <Label Grid.Column="0" Grid.Row="2" Content="Email:" />
                         <Label Grid.Column="0" Grid.Row="3" Content="Klassenstufe:" />
                         <Label Grid.Column="0" Grid.Row="4" Content="Klassennummer:" />
-                        
+
                         <TextBox Text="{Binding SelectedStudent.FirstName, Mode=TwoWay}"
                                  Name="studentFirstName" Grid.Column="1" Grid.Row="0" />
                         <TextBox Text="{Binding SelectedStudent.LastName, Mode=TwoWay}"
@@ -89,23 +89,46 @@
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
                             <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
                             <RowDefinition />
                             <RowDefinition Height="auto" />
                         </Grid.RowDefinitions>
                         <Label Grid.Column="0" Grid.Row="0" Content="Name:" />
                         <Label Grid.Column="0" Grid.Row="1" Content="Beschreibung:" />
-                        <Label Grid.Column="0" Grid.Row="2" Content="Minimale Klassenstufe:" />
-                        <Label Grid.Column="0" Grid.Row="3" Content="Maximale Klassenstufe:" />
-                        <Label Grid.Column="0" Grid.Row="4" Content="Minimale Teilnehmerzahl:" />
-                        <Label Grid.Column="0" Grid.Row="5" Content="Maximale Teilnehmerzahl:" />
+                        <Label Grid.Column="0" Grid.Row="2" Content="Projektleiter:" />
+                        <Label Grid.Column="0" Grid.Row="3" Content="Minimale Klassenstufe:" />
+                        <Label Grid.Column="0" Grid.Row="4" Content="Maximale Klassenstufe:" />
+                        <Label Grid.Column="0" Grid.Row="5" Content="Minimale Teilnehmerzahl:" />
+                        <Label Grid.Column="0" Grid.Row="6" Content="Maximale Teilnehmerzahl:" />
 
                         <TextBox Text="{Binding SelectedProject.Name, Mode=TwoWay}"
                                  Name="projectName" Grid.Column="1" Grid.Row="0" />
                         <TextBox Text="{Binding SelectedProject.Description, Mode=TwoWay}"
                                  Name="projectDescription" Grid.Column="1" Grid.Row="1"
-                                 AcceptsReturn="True" TextWrapping="Wrap" Height="100" />
+                                 AcceptsReturn="True" TextWrapping="Wrap" SpellCheck.IsEnabled="True" Language="de-DE" Height="100" />
+                        <ListBox ItemsSource="{Binding SelectedProject.Managers, Mode=TwoWay}"
+                                 Name="projectManagers" Grid.Column="1" Grid.Row="2" Height="100">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Label>
+                                        <Label.Content>
+                                            <MultiBinding StringFormat="{}{0}, {1}">
+                                                <Binding Path="LastName" />
+                                                <Binding Path="FirstName" />
+                                            </MultiBinding>
+                                        </Label.Content>
+                                        <Label.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Entfernen" Command="{Binding SelectedProject.RemoveManager}"
+                                                          CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem}"/>
+                                            </ContextMenu>
+                                        </Label.ContextMenu>
+                                    </Label>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
 
-                        <Button Name="projectDelete" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="7" Content="Projekt löschen" Click="projectDelete_Click" />
+                        <Button Name="projectDelete" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="8" Content="Projekt löschen" Click="projectDelete_Click" />
                     </Grid>
                     <ListView Name="projectsList" ItemsSource="{Binding Data.Projects}" SelectionChanged="projectsList_SelectionChanged">
                         <ListView.View>
@@ -113,10 +136,14 @@
                                 <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Value.Name}" />
                                 <GridViewColumn Header="Klassenstufen" DisplayMemberBinding="{Binding Value.ClassLevels}" />
                                 <GridViewColumn Header="Teilnehmerzahl" DisplayMemberBinding="{Binding Value.ParticipantCounts}" />
+                                <GridViewColumn Header="Projektleiter" DisplayMemberBinding="{Binding Value.ManagersAsString}" />
                             </GridView>
                         </ListView.View>
                     </ListView>
                 </DockPanel>
+            </TabItem>
+            <TabItem Header="Lösung">
+
             </TabItem>
         </TabControl>
     </DockPanel>

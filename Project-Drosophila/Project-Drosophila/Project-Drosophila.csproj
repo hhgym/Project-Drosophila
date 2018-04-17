@@ -77,6 +77,7 @@
     <Compile Include="Project.cs" />
     <Compile Include="Student.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Wishlist.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
